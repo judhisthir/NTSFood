@@ -1,78 +1,117 @@
-// App.tsx
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
 
-const Drawer = createDrawerNavigator();
+import React from 'react';
+import type {PropsWithChildren} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
 
-const HomeScreen = () => (
-  <SafeAreaView style={styles.container}>
-    <Text>Home Screen</Text>
-  </SafeAreaView>
-);
+import {
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
 
-const SettingsScreen = () => (
-  <SafeAreaView style={styles.container}>
-    <Text>Settings Screen</Text>
-  </SafeAreaView>
-);
+type SectionProps = PropsWithChildren<{
+  title: string;
+}>;
 
-const CustomDrawerContent = (props: any) => {
+function Section({children, title}: SectionProps): React.JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      {/* Collapsible Menu Item */}
-      <Text style={styles.menuItem}>Item 1</Text>
-      <Text style={styles.submenu}>Submenu 1.1</Text>
-      <Text style={styles.submenu}>Submenu 1.2</Text>
-      <Text style={styles.submenu}>Submenu 1.3</Text>
-
-      <Text style={styles.menuItem}>Item 2</Text>
-      <Text style={styles.submenu}>Submenu 2.1</Text>
-      <Text style={styles.submenu}>Submenu 2.2</Text>
-      <Text style={styles.submenu}>Submenu 2.3</Text>
-
-      <Text style={styles.menuItem}>Item 3</Text>
-      <Text style={styles.submenu}>Submenu 3.1</Text>
-      <Text style={styles.submenu}>Submenu 3.2</Text>
-      <Text style={styles.submenu}>Submenu 3.3</Text>
-
-      <Text style={styles.menuItem}>Item 4</Text>
-      <Text style={styles.submenu}>Submenu 4.1</Text>
-      <Text style={styles.submenu}>Submenu 4.2</Text>
-      <Text style={styles.submenu}>Submenu 4.3</Text>
-    </DrawerContentScrollView>
+    <View style={styles.sectionContainer}>
+      <Text
+        style={[
+          styles.sectionTitle,
+          {
+            color: isDarkMode ? Colors.white : Colors.black,
+          },
+        ]}>
+        {title}
+      </Text>
+      <Text
+        style={[
+          styles.sectionDescription,
+          {
+            color: isDarkMode ? Colors.light : Colors.dark,
+          },
+        ]}>
+        {children}
+      </Text>
+    </View>
   );
-};
+}
 
-const App = () => {
+function App(): React.JSX.Element {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
   return (
-    <NavigationContainer>
-      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Settings" component={SettingsScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={backgroundStyle}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}>
+        <Header />
+        <View
+          style={{
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          }}>
+          <Section title="Step One">
+            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+            screen and then come back to see your edits.
+          </Section>
+          <Section title="See Your Changes">
+            <ReloadInstructions />
+          </Section>
+          <Section title="Debug">
+            <DebugInstructions />
+          </Section>
+          <Section title="Learn More">
+            Read the docs to discover what to do next:
+          </Section>
+          {/* <LearnMoreLinks /> */}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
   },
-  menuItem: {
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  sectionDescription: {
+    marginTop: 8,
     fontSize: 18,
-    fontWeight: 'bold',
-    marginVertical: 10,
+    fontWeight: '400',
   },
-  submenu: {
-    fontSize: 16,
-    marginLeft: 20,
-    marginVertical: 5,
+  highlight: {
+    fontWeight: '700',
   },
 });
 

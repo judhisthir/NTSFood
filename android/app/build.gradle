@@ -84,11 +84,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        
     }
-    project.ext.vectoricons = [
-  iconFontNames: ['MaterialIcons.ttf']
-]
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
