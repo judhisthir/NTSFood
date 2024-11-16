@@ -1,117 +1,78 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+// App.tsx
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const Drawer = createDrawerNavigator();
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const HomeScreen = () => (
+  <SafeAreaView style={styles.container}>
+    <Text>Home Screen</Text>
+  </SafeAreaView>
+);
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const SettingsScreen = () => (
+  <SafeAreaView style={styles.container}>
+    <Text>Settings Screen</Text>
+  </SafeAreaView>
+);
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const CustomDrawerContent = (props: any) => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      {/* Collapsible Menu Item */}
+      <Text style={styles.menuItem}>Item 1</Text>
+      <Text style={styles.submenu}>Submenu 1.1</Text>
+      <Text style={styles.submenu}>Submenu 1.2</Text>
+      <Text style={styles.submenu}>Submenu 1.3</Text>
+
+      <Text style={styles.menuItem}>Item 2</Text>
+      <Text style={styles.submenu}>Submenu 2.1</Text>
+      <Text style={styles.submenu}>Submenu 2.2</Text>
+      <Text style={styles.submenu}>Submenu 2.3</Text>
+
+      <Text style={styles.menuItem}>Item 3</Text>
+      <Text style={styles.submenu}>Submenu 3.1</Text>
+      <Text style={styles.submenu}>Submenu 3.2</Text>
+      <Text style={styles.submenu}>Submenu 3.3</Text>
+
+      <Text style={styles.menuItem}>Item 4</Text>
+      <Text style={styles.submenu}>Submenu 4.1</Text>
+      <Text style={styles.submenu}>Submenu 4.2</Text>
+      <Text style={styles.submenu}>Submenu 4.3</Text>
+    </DrawerContentScrollView>
   );
-}
+};
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+const App = () => {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          {/* <LearnMoreLinks /> */}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Settings" component={SettingsScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
+  menuItem: {
     fontSize: 18,
-    fontWeight: '400',
+    fontWeight: 'bold',
+    marginVertical: 10,
   },
-  highlight: {
-    fontWeight: '700',
+  submenu: {
+    fontSize: 16,
+    marginLeft: 20,
+    marginVertical: 5,
   },
 });
 
