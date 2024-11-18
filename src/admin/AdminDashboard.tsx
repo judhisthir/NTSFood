@@ -4,7 +4,7 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import { Appbar, IconButton } from 'react-native-paper';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { DrawerNavigator } from './SideDrawer'; 
+import { DrawerNavigator } from './SideDrawer';
 
 const AdminDashboard: React.FC = () => {
   return (
